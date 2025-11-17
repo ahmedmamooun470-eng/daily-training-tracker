@@ -51,7 +51,7 @@ function displayPhotoPreview(file) {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-        alert('من فضلك اختر صورة صحيحة');
+        alert('Please select a valid image file');
         return;
     }
 
@@ -68,7 +68,7 @@ document.getElementById('trainingForm').addEventListener('submit', async functio
 
     const submitBtn = document.querySelector('.btn-submit');
     submitBtn.disabled = true;
-    submitBtn.textContent = 'جاري الإرسال...';
+    submitBtn.textContent = 'Sending...';
 
     try {
         // If Formspree endpoint is configured (window.FORMSPREE_ENDPOINT), submit using FormData
@@ -159,7 +159,7 @@ document.getElementById('trainingForm').addEventListener('submit', async functio
         }, 5000);
     } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'إرسال';
+        submitBtn.textContent = 'Submit';
     }
 });
 
