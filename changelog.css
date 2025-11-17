@@ -1,9 +1,0 @@
-body { background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-.wrap { max-width:1100px; margin:24px auto; padding:20px; border:3px solid #d4af37; border-radius:8px; background: #0b0b0b; }
-header h1 { color:#d4af37; margin-bottom:6px }
-.changelog { width:100%; border-collapse:collapse; margin-top:18px }
-.changelog thead th { text-align:left; padding:10px 12px; border-bottom:2px solid #b8860b; color:#fff }
-.changelog tbody td { padding:10px 12px; border-bottom:1px solid rgba(212,175,55,0.06); color:#fff }
-.changelog code { background:rgba(255,255,255,0.05); padding:4px 6px; border-radius:4px; color:#fff }
-a { color: #d4af37 }
-@media (max-width:800px) { .changelog thead { display:none } .changelog tbody td { display:block; width:100% } .changelog tbody td:before { font-weight:700 } }
