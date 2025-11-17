@@ -1,8 +1,15 @@
 const nodemailer = require('nodemailer');
 
+// Optional: use SendGrid Web API if SENDGRID_API_KEY is provided in environment
+let sgMail;
+try {
+  sgMail = require('@sendgrid/mail');
+} catch (e) {
+  // package may not be installed; we'll fall back to SMTP
+}
+
 // This function expects a JSON body with the form fields and optional
-// `photo` as a data URL (base64). It sends an email using SMTP credentials set
-// in environment variables on Netlify.
+// `photo` as a data URL (base64). It will use SendGrid (preferred) or SMTP.
 
 exports.handler = async function (event, context) {
   try {
@@ -25,18 +32,6 @@ exports.handler = async function (event, context) {
     } = body;
 
     const to = process.env.EMAIL_TO || 'talkhanahmed422@gmail.com';
-
-    // Create transporter using SMTP credentials set in Netlify environment variables
-    // Recommended: use SendGrid SMTP, Mailgun SMTP, or Gmail App Password (if using Gmail)
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587,
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      }
-    });
 
     // Build HTML body
     let html = `<h2>Daily Training Tracker Submission</h2>`;
@@ -64,35 +59,83 @@ exports.handler = async function (event, context) {
       html += `<h3>Notes / Message</h3><p>${message}</p>`;
     }
 
-    const mailOptions = {
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to,
-      subject: `Training Submission - ${name || 'Unknown'} (${date || ''})`,
-      html
-    };
+    const subject = `Training Submission - ${name || 'Unknown'} (${date || ''})`;
 
-    // If photo is provided as a data URL, attach it
+    // If photo is provided as a data URL, parse it for attachment
+    let attachment;
     if (photo && photo.startsWith('data:')) {
-      // parse data URL
       const match = photo.match(/^data:(image\/[^;]+);base64,(.+)$/);
       if (match) {
         const mime = match[1];
-        const data = Buffer.from(match[2], 'base64');
-        mailOptions.attachments = [
+        const dataBase64 = match[2];
+        const ext = mime.split('/')[1] || 'jpg';
+        attachment = {
+          filename: `photo.${ext}`,
+          content: dataBase64,
+          type: mime
+        };
+      }
+    }
+
+    // If SendGrid API key is available, use SendGrid Web API (preferred)
+    if (process.env.SENDGRID_API_KEY && sgMail) {
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
+        to,
+        from: process.env.SENDGRID_FROM || process.env.SMTP_FROM || process.env.SMTP_USER || `no-reply@${process.env.SENDGRID_DOMAIN || 'example.com'}`,
+        subject,
+        html
+      };
+      if (attachment) {
+        msg.attachments = [
           {
-            filename: `photo.${mime.split('/')[1]}`,
-            content: data,
-            contentType: mime
+            content: attachment.content,
+            filename: attachment.filename,
+            type: attachment.type,
+            disposition: 'attachment'
           }
         ];
       }
+      await sgMail.send(msg);
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ ok: true, via: 'sendgrid' })
+      };
+    }
+
+    // Fallback to SMTP using nodemailer
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587,
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.SMTP_FROM || process.env.SMTP_USER,
+      to,
+      subject,
+      html
+    };
+    if (attachment) {
+      // nodemailer expects Buffer for content
+      mailOptions.attachments = [
+        {
+          filename: attachment.filename,
+          content: Buffer.from(attachment.content, 'base64'),
+          contentType: attachment.type
+        }
+      ];
     }
 
     await transporter.sendMail(mailOptions);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ ok: true })
+      body: JSON.stringify({ ok: true, via: 'smtp' })
     };
   } catch (err) {
     console.error('Error sending email:', err);
