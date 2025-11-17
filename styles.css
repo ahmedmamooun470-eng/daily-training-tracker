@@ -157,10 +157,11 @@ textarea {
     font-size: 2.5rem;
     display: block;
     margin-bottom: 10px;
+    color: #ffffff;
 }
 
 .file-input-area p {
-    color: #000000;
+    color: #ffffff;
     font-weight: 500;
     margin: 0;
 }
