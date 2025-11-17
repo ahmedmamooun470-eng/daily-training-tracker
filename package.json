@@ -7,10 +7,6 @@
     "start": "npx http-server",
     "build": "echo 'Build complete'"
   },
-  "dependencies": {
-    "nodemailer": "^6.9.4",
-    "@sendgrid/mail": "^7.9.0"
-  },
   "keywords": [
     "fitness",
     "training",

@@ -1,0 +1,10 @@
+{
+  "name": "netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions dependencies",
+  "dependencies": {
+    "nodemailer": "^6.9.4",
+    "@sendgrid/mail": "^7.9.0"
+  }
+}
+
