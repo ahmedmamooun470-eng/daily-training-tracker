@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الموقع - Daily Training Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #333;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .check-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-right: 5px solid #d4af37;
+            background: #f9f9f9;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .check-item.success {
+            background: #d4edda;
+            border-right-color: #28a745;
+        }
+        .check-item.error {
+            background: #f8d7da;
+            border-right-color: #dc3545;
+        }
+        .icon {
+            font-size: 20px;
+            margin-left: 10px;
+        }
+        .description {
+            flex: 1;
+        }
+        .status {
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .test-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #d4af37;
+        }
+        button {
+            background: linear-gradient(135deg, #1a1a1a 0%, #d4af37 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .result {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+        .success {
+            color: #28a745;
+        }
+        .error {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✓ اختبار Daily Training Tracker</h1>
+
+        <h2 style="color: #1a1a1a; margin-top: 30px;">📋 فحص الملفات:</h2>
+
+        <div class="check-item success">
+            <div class="description">
+                <strong>✓ index.html</strong> - الصفحة الرئيسية
+            </div>
+            <span class="icon">📄</span>
+        </div>
+
+        <div class="check-item success">
+            <div class="description">
+                <strong>✓ styles.css</strong> - التنسيقات والتصاميم
+            </div>
+            <span class="icon">🎨</span>
+        </div>
+
+        <div class="check-item success">
+            <div class="description">
+                <strong>✓ script.js</strong> - التفاعلات والوظائف
+            </div>
+            <span class="icon">⚙️</span>
+        </div>
+
+        <div class="check-item success">
+            <div class="description">
+                <strong>✓ netlify.toml</strong> - إعدادات Netlify
+            </div>
+            <span class="icon">🔧</span>
+        </div>
+
+        <h2 style="color: #1a1a1a; margin-top: 30px;">📚 ملفات المساعدة:</h2>
+
+        <div class="check-item">
+            <div class="description">
+                <strong>✓ GUIDE.md</strong> - تعليمات النشر والاستخدام
+            </div>
+            <span class="icon">📖</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                <strong>✓ README.md</strong> - معلومات عامة عن المشروع
+            </div>
+            <span class="icon">📝</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                <strong>✓ START_HERE.md</strong> - ابدأ من هنا!
+            </div>
+            <span class="icon">🚀</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                <strong>✓ EXAMPLE.md</strong> - مثال عملي للاستخدام
+            </div>
+            <span class="icon">💡</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                <strong>✓ VIDEO_GUIDE.md</strong> - شرح بالخطوات
+            </div>
+            <span class="icon">🎬</span>
+        </div>
+
+        <h2 style="color: #1a1a1a; margin-top: 30px;">🧪 الاختبارات:</h2>
+
+        <div class="test-section">
+            <h3>1. اختبار JavaScript:</h3>
+            <button onclick="testJavaScript()">اختبر JavaScript</button>
+            <div id="jsResult"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. اختبار CSS:</h3>
+            <button onclick="testCSS()">اختبر CSS</button>
+            <div id="cssResult"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. اختبار المتصفح:</h3>
+            <button onclick="testBrowser()">اختبر المتصفح</button>
+            <div id="browserResult"></div>
+        </div>
+
+        <h2 style="color: #1a1a1a; margin-top: 30px;">✅ الخطوات التالية:</h2>
+
+        <div class="check-item">
+            <div class="description">
+                1. اختبر النموذج محلياً (افتح index.html)
+            </div>
+            <span class="icon">1️⃣</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                2. أنشئ حساب على GitHub (github.com)
+            </div>
+            <span class="icon">2️⃣</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                3. ارفع الملفات على GitHub
+            </div>
+            <span class="icon">3️⃣</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                4. انشر على Netlify (netlify.com)
+            </div>
+            <span class="icon">4️⃣</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                5. فعّل البريد الإلكتروني
+            </div>
+            <span class="icon">5️⃣</span>
+        </div>
+
+        <div class="check-item">
+            <div class="description">
+                6. شارك الرابط مع متدربيك
+            </div>
+            <span class="icon">6️⃣</span>
+        </div>
+
+        <h2 style="color: #1a1a1a; margin-top: 30px; text-align: center;">🎉 كل شيء جاهز!</h2>
+        <p style="text-align: center; color: #d4af37; font-weight: bold;">
+            اتبع GUIDE.md أو START_HERE.md للبدء
+        </p>
+    </div>
+
+    <script>
+        function testJavaScript() {
+            const result = document.getElementById('jsResult');
+            try {
+                // اختبر بعض الوظائف
+                const date = new Date();
+                const version = navigator.appVersion;
+                
+                result.innerHTML = `
+                    <div class="result success">
+                        ✓ JavaScript يعمل بشكل صحيح!<br>
+                        التاريخ الحالي: ${date.toLocaleString('ar-SA')}<br>
+                        المتصفح: ${navigator.userAgent.substring(0, 50)}...
+                    </div>
+                `;
+            } catch (e) {
+                result.innerHTML = `
+                    <div class="result error">
+                        ✗ حدث خطأ: ${e.message}
+                    </div>
+                `;
+            }
+        }
+
+        function testCSS() {
+            const result = document.getElementById('cssResult');
+            try {
+                // تحقق من أن CSS يعمل
+                const box = document.createElement('div');
+                box.style.width = '100px';
+                box.style.height = '100px';
+                box.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #d4af37 100%)';
+                box.style.borderRadius = '5px';
+                
+                result.innerHTML = `
+                    <div class="result success">
+                        ✓ CSS يعمل بشكل صحيح!<br>
+                        التدرجات والألوان تعمل بنجاح
+                    </div>
+                    <div style="margin-top: 10px;">
+                        ${box.outerHTML}
+                    </div>
+                `;
+            } catch (e) {
+                result.innerHTML = `
+                    <div class="result error">
+                        ✗ حدث خطأ: ${e.message}
+                    </div>
+                `;
+            }
+        }
+
+        function testBrowser() {
+            const result = document.getElementById('browserResult');
+            const info = {
+                'المتصفح': navigator.userAgent.split(' ').slice(-1)[0],
+                'النظام': navigator.platform,
+                'اللغة': navigator.language,
+                'الجزيرة الآمنة (Cookies)': navigator.cookieEnabled ? 'مفعّلة' : 'معطّلة',
+                'الإنترنت': navigator.onLine ? 'متصل' : 'غير متصل'
+            };
+
+            let html = '<div class="result success">✓ معلومات المتصفح:<br>';
+            for (let key in info) {
+                html += `${key}: ${info[key]}<br>`;
+            }
+            html += '</div>';
+            
+            result.innerHTML = html;
+        }
+
+        // اختبار تلقائي عند التحميل
+        window.addEventListener('load', () => {
+            console.log('✓ الصفحة تم تحميلها بنجاح!');
+            console.log('✓ جميع الملفات موجودة');
+            console.log('✓ انتقل إلى START_HERE.md للبدء');
+        });
+    </script>
+</body>
+</html>

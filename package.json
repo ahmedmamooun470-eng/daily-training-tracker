@@ -1,0 +1,21 @@
+{
+  "name": "daily-training-tracker",
+  "version": "1.0.0",
+  "description": "Daily Training Tracker for Coach Khaled Safwat",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.4"
+  },
+  "keywords": [
+    "fitness",
+    "training",
+    "tracker",
+    "gym"
+  ],
+  "author": "Coach Khaled Safwat",
+  "license": "MIT"
+}

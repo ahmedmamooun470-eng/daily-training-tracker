@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Training Tracker - Coach Khaled Safwat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>Coach Khaled Safwat</h1>
+                <p class="subtitle">Daily Training Tracker</p>
+            </div>
+        </header>
+
+        <main class="form-container">
+            <form id="trainingForm" name="trainingForm" method="POST" enctype="multipart/form-data" netlify>
+                <input type="hidden" name="form-name" value="trainingForm">
+                <!-- Personal Information Section -->
+                <section class="form-section">
+                    <h2 class="section-title">Personal Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            placeholder="e.g. Ahmed Khalil"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input 
+                                type="date" 
+                                id="date" 
+                                name="date"
+                                required
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Body Weight (kg)</label>
+                            <input 
+                                type="number" 
+                                id="weight" 
+                                name="weight" 
+                                placeholder="e.g. 82"
+                                step="0.1"
+                                required
+                            >
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Exercise 1 Section -->
+                <section class="form-section">
+                    <h2 class="section-title">Incline DB Press (دامبل عالي للصدر)</h2>
+                    
+                    <div class="form-group">
+                        <label for="exercise1_sets">Effective Sets</label>
+                        <input 
+                            type="number" 
+                            id="exercise1_sets" 
+                            name="exercise1_sets" 
+                            placeholder="e.g. 3"
+                            min="1"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercise1_details">Set Details</label>
+                        <textarea 
+                            id="exercise1_details" 
+                            name="exercise1_details" 
+                            placeholder="Set1: 8 reps x 20kg&#10;Set2: 6 reps x 22.5kg"
+                            rows="4"
+                            required
+                        ></textarea>
+                    </div>
+                </section>
+
+                <!-- Exercise 2 Section -->
+                <section class="form-section">
+                    <h2 class="section-title">Tricep Pushdown (تراي بوش داون)</h2>
+                    
+                    <div class="form-group">
+                        <label for="exercise2_sets">Effective Sets</label>
+                        <input 
+                            type="number" 
+                            id="exercise2_sets" 
+                            name="exercise2_sets" 
+                            placeholder="e.g. 3"
+                            min="1"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercise2_details">Set Details</label>
+                        <textarea 
+                            id="exercise2_details" 
+                            name="exercise2_details" 
+                            placeholder="Set1: 8 reps x 40kg&#10;Set2: 6 reps x 45kg"
+                            rows="4"
+                            required
+                        ></textarea>
+                    </div>
+                </section>
+
+                <!-- Exercise 3 Section -->
+                <section class="form-section">
+                    <h2 class="section-title">Wide Lat Pull Down (سحب عالي واسع)</h2>
+                    
+                    <div class="form-group">
+                        <label for="exercise3_sets">Effective Sets</label>
+                        <input 
+                            type="number" 
+                            id="exercise3_sets" 
+                            name="exercise3_sets" 
+                            placeholder="e.g. 3"
+                            min="1"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercise3_details">Set Details</label>
+                        <textarea 
+                            id="exercise3_details" 
+                            name="exercise3_details" 
+                            placeholder="Set1: 8 reps x 40kg&#10;Set2: 6 reps x 45kg"
+                            rows="4"
+                            required
+                        ></textarea>
+                    </div>
+                </section>
+
+                <!-- Exercise 4 Section -->
+                <section class="form-section">
+                    <h2 class="section-title">T-Bar Row (سحب عالتي بار)</h2>
+                    
+                    <div class="form-group">
+                        <label for="exercise4_sets">Effective Sets</label>
+                        <input 
+                            type="number" 
+                            id="exercise4_sets" 
+                            name="exercise4_sets" 
+                            placeholder="e.g. 3"
+                            min="1"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercise4_details">Set Details</label>
+                        <textarea 
+                            id="exercise4_details" 
+                            name="exercise4_details" 
+                            placeholder="Set1: 8 reps x 40kg&#10;Set2: 6 reps x 45kg"
+                            rows="4"
+                            required
+                        ></textarea>
+                    </div>
+                </section>
+
+                <!-- Client Message Section -->
+                <section class="form-section">
+                    <h2 class="section-title">Notes & Comments</h2>
+                    
+                    <div class="form-group">
+                        <label for="message">Write your notes or comments here</label>
+                        <textarea 
+                            id="message" 
+                            name="message" 
+                            placeholder="Write your notes or comments here..."
+                            rows="5"
+                        ></textarea>
+                    </div>
+                </section>
+
+                <!-- Photo Section -->
+                <section class="form-section">
+                    <h2 class="section-title">Today's Photo</h2>
+                    
+                    <div class="form-group">
+                        <label for="photo" class="file-input-label">
+                            <div class="file-input-area">
+                                <span class="file-icon">📷</span>
+                                <p>Click to select or drag & drop image</p>
+                            </div>
+                            <input 
+                                type="file" 
+                                id="photo" 
+                                name="photo" 
+                                accept="image/*"
+                                style="display: none;"
+                            >
+                        </label>
+                        <div id="photoPreview" class="photo-preview"></div>
+                    </div>
+                </section>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Submit</button>
+                </div>
+
+                <div id="successMessage" class="success-message" style="display: none;">
+                    Data submitted successfully! ✓
+                </div>
+                <div id="errorMessage" class="error-message" style="display: none;">
+                    An error occurred while submitting. Please try again.
+                </div>
+            </form>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Coach Khaled Safwat - Daily Training Tracker</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
