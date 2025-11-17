@@ -17,6 +17,7 @@ exports.handler = async function (event, context) {
 
     const {
       name,
+      email,
       date,
       weight,
       exercise1_sets,
@@ -36,6 +37,7 @@ exports.handler = async function (event, context) {
     // Build HTML body
     let html = `<h2>Daily Training Tracker Submission</h2>`;
     html += `<p><strong>Name:</strong> ${name || '-'}<br>`;
+    html += `<strong>Email:</strong> ${email || '-'}<br>`;
     html += `<strong>Date:</strong> ${date || '-'}<br>`;
     html += `<strong>Body Weight (kg):</strong> ${weight || '-'}<br></p>`;
 

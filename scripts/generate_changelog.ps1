@@ -10,6 +10,15 @@ This script writes `changelog.html` to the repository root.
 
 Param()
 
+function HtmlEncode([string]$text) {
+    $text = $text -replace '&', '&amp;'
+    $text = $text -replace '<', '&lt;'
+    $text = $text -replace '>', '&gt;'
+    $text = $text -replace '"', '&quot;'
+    $text = $text -replace "'", '&#39;'
+    return $text
+}
+
 try {
     $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
     Push-Location $scriptDir\..\
@@ -26,10 +35,10 @@ try {
         foreach ($line in $gitOutput -split "`n") {
             $parts = $line -split '\|',4
             if ($parts.Count -ge 4) {
-                $hash = [System.Web.HttpUtility]::HtmlEncode($parts[0])
-                $author = [System.Web.HttpUtility]::HtmlEncode($parts[1])
-                $date = [System.Web.HttpUtility]::HtmlEncode($parts[2])
-                $msg = [System.Web.HttpUtility]::HtmlEncode($parts[3])
+                $hash = HtmlEncode($parts[0])
+                $author = HtmlEncode($parts[1])
+                $date = HtmlEncode($parts[2])
+                $msg = HtmlEncode($parts[3])
                 $rows += "<tr><td><code>$hash</code></td><td>$author</td><td>$date</td><td>$msg</td></tr>"
             }
         }
