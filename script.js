@@ -71,40 +71,71 @@ document.getElementById('trainingForm').addEventListener('submit', async functio
     submitBtn.textContent = 'جاري الإرسال...';
 
     try {
-        // Prepare form data and optionally convert photo to data URL
-        const fd = new FormData(this);
-        const payload = {};
-        fd.forEach((v, k) => payload[k] = v);
+        // If Formspree endpoint is configured (window.FORMSPREE_ENDPOINT), submit using FormData
+        const formspreeEndpoint = window.FORMSPREE_ENDPOINT || document.getElementById('trainingForm').dataset.formspreeEndpoint || null;
+        if (formspreeEndpoint) {
+            // show badge
+            const badge = document.getElementById('formspreeBadge');
+            if (badge) badge.style.display = 'inline-flex';
 
-        // If there's a photo file, convert to data URL
-        const fileInput = document.getElementById('photo');
-        if (fileInput && fileInput.files && fileInput.files[0]) {
-            const file = fileInput.files[0];
-            payload.photo = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
+            const formData = new FormData(this);
+
+            const resp = await fetch(formspreeEndpoint, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
             });
-        }
 
-        // Send to Netlify Function which will forward via SMTP
-        const response = await fetch('/.netlify/functions/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        const result = await response.json();
-        if (response.ok && result.ok) {
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('errorMessage').style.display = 'none';
-            this.reset();
-            photoPreview.innerHTML = '';
-            document.getElementById('date').valueAsDate = new Date();
-            setTimeout(() => { document.getElementById('successMessage').style.display = 'none'; }, 5000);
+            if (resp.ok) {
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+                this.reset();
+                photoPreview.innerHTML = '';
+                document.getElementById('date').valueAsDate = new Date();
+                setTimeout(() => { document.getElementById('successMessage').style.display = 'none'; }, 5000);
+            } else {
+                const body = await resp.json().catch(() => ({}));
+                throw new Error(body.error || `Formspree error: ${resp.status}`);
+            }
         } else {
-            throw new Error(result.error || 'Failed to send email');
+            // Fallback: use Netlify function (existing behavior)
+            // Prepare form data and optionally convert photo to data URL
+            const fd = new FormData(this);
+            const payload = {};
+            fd.forEach((v, k) => payload[k] = v);
+
+            // If there's a photo file, convert to data URL
+            const fileInput = document.getElementById('photo');
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                payload.photo = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // Send to Netlify Function which will forward via SMTP
+            const response = await fetch('/.netlify/functions/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            if (response.ok && result.ok) {
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+                this.reset();
+                photoPreview.innerHTML = '';
+                document.getElementById('date').valueAsDate = new Date();
+                setTimeout(() => { document.getElementById('successMessage').style.display = 'none'; }, 5000);
+            } else {
+                throw new Error(result.error || 'Failed to send email');
+            }
         }
     } catch (error) {
         console.error('Error:', error);

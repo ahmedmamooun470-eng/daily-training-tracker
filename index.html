@@ -16,6 +16,14 @@
         </header>
 
         <main class="form-container">
+            <!-- To enable Formspree: set the endpoint in the small script below or
+                 set `window.FORMSPREE_ENDPOINT` in this file to your Formspree URL.
+                 Example: window.FORMSPREE_ENDPOINT = "https://formspree.io/f/xxxxxx"; -->
+            <script>
+                // Paste your Formspree endpoint here to enable direct Formspree submissions.
+                // window.FORMSPREE_ENDPOINT = ""; // e.g. "https://formspree.io/f/abcd1234"
+            </script>
+
             <form id="trainingForm" name="trainingForm" method="POST" enctype="multipart/form-data" netlify>
                 <input type="hidden" name="form-name" value="trainingForm">
                 <!-- Personal Information Section -->
@@ -209,6 +217,9 @@
                 <!-- Submit Button -->
                 <div class="form-actions">
                     <button type="submit" class="btn-submit">Submit</button>
+                    <div id="formspreeBadge" style="display:none; align-items:center;">
+                        <img src="https://cdn.formspree.io/images/formspree-logo.svg" alt="Formspree" style="height:20px; margin-left:8px;">
+                    </div>
                 </div>
 
                 <div id="successMessage" class="success-message" style="display: none;">
