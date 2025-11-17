@@ -85,10 +85,12 @@ document.getElementById('trainingForm').addEventListener('submit', async functio
                 body: formData,
                 headers: {
                     'Accept': 'application/json'
-                }
+                },
+                redirect: 'follow'
             });
 
-            if (resp.ok) {
+            // Treat 2xx and 3xx responses as success for Formspree (it may redirect to /thanks)
+            if (resp.status >= 200 && resp.status < 400) {
                 document.getElementById('successMessage').style.display = 'block';
                 document.getElementById('errorMessage').style.display = 'none';
                 this.reset();
@@ -96,7 +98,16 @@ document.getElementById('trainingForm').addEventListener('submit', async functio
                 document.getElementById('date').valueAsDate = new Date();
                 setTimeout(() => { document.getElementById('successMessage').style.display = 'none'; }, 5000);
             } else {
-                const body = await resp.json().catch(() => ({}));
+                // Try to read JSON error if available
+                let body = {};
+                try {
+                    const contentType = resp.headers.get('content-type') || '';
+                    if (contentType.includes('application/json')) {
+                        body = await resp.json();
+                    }
+                } catch (e) {
+                    // ignore parse errors
+                }
                 throw new Error(body.error || `Formspree error: ${resp.status}`);
             }
         } else {
