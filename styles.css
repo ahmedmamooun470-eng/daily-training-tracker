@@ -294,6 +294,8 @@ textarea {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 3px solid var(--secondary);
 }
 
 .exercise-pair .form-section {
@@ -303,14 +305,19 @@ textarea {
     border-bottom: none;
 }
 
+.exercise-pair:last-of-type {
+    border-bottom: none;
+}
+
 @media (max-width: 768px) {
     .exercise-pair {
         grid-template-columns: 1fr;
+        border-bottom: 3px solid var(--secondary);
     }
     .exercise-pair .form-section {
-        margin-bottom: 40px;
-        padding-bottom: 30px;
-        border-bottom: 2px solid var(--gold-dark);
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
     }
 }
 
