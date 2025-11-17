@@ -1,7 +1,10 @@
 [build]
-  command = "echo 'Building...'"
+  command = "cd netlify/functions && npm install && cd ../.."
   publish = "."
   functions = "netlify/functions"
+
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
 
 [[redirects]]
   from = "/*"
